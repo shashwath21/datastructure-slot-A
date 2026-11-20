@@ -1,0 +1,49 @@
+=== Insert 10,20,30,40,50,25 one by one (AVL) ===
+
+-- after inserting 10: rotation = none (0 rotation step(s)), height = 1, balanced = 1
+10 (h=1,bf=0)
+
+-- after inserting 20: rotation = none (0 rotation step(s)), height = 2, balanced = 1
+      20 (h=1,bf=0)
+10 (h=2,bf=-1)
+
+-- after inserting 30: rotation = RR (single left) (1 rotation step(s)), height = 2, balanced = 1
+      30 (h=1,bf=0)
+20 (h=2,bf=0)
+      10 (h=1,bf=0)
+
+-- after inserting 40: rotation = none (0 rotation step(s)), height = 3, balanced = 1
+            40 (h=1,bf=0)
+      30 (h=2,bf=-1)
+20 (h=3,bf=-1)
+      10 (h=1,bf=0)
+
+-- after inserting 50: rotation = RR (single left) (1 rotation step(s)), height = 3, balanced = 1
+            50 (h=1,bf=0)
+      40 (h=2,bf=0)
+            30 (h=1,bf=0)
+20 (h=3,bf=-1)
+      10 (h=1,bf=0)
+
+-- after inserting 25: rotation = RL (right-left) (2 rotation step(s)), height = 3, balanced = 1
+            50 (h=1,bf=0)
+      40 (h=2,bf=-1)
+30 (h=3,bf=0)
+            25 (h=1,bf=0)
+      20 (h=2,bf=0)
+            10 (h=1,bf=0)
+
+=== 100,000 SORTED keys: BST vs AVL ===
+BST height = 100000
+AVL height = 17   (1.44*log2(n) bound = 23.9)
+insert time: BST 14.7107 s | AVL 0.0346 s
+2000 searches: BST 0.4963 s | AVL 0.000394 s   (hits=4000)
+AVL rotations for sorted insertions: 99983
+balance factor of every node within [-1,1] and heights correct: VERIFIED
+
+=== 100,000 RANDOM keys ===
+BST height = 40 | AVL height = 20
+insert time: BST 0.0334 s | AVL 0.0978 s
+100000 searches: BST 0.0254 s | AVL 0.0229 s
+AVL rotations for random insertions: 69691 (0.70 per insertion)
+balance verified: VERIFIED

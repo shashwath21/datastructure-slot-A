@@ -1,0 +1,43 @@
+=== Insert 10,20,5,6,12,30,7,17 into B-tree (t=2) ===
+insert 10  (splits this step: 0)
+   level 0: [10] 
+insert 20  (splits this step: 0)
+   level 0: [10 20] 
+insert  5  (splits this step: 0)
+   level 0: [5 10 20] 
+insert  6  (splits this step: 1)
+   level 0: [10] 
+   level 1: [5 6] [20] 
+insert 12  (splits this step: 0)
+   level 0: [10] 
+   level 1: [5 6] [12 20] 
+insert 30  (splits this step: 0)
+   level 0: [10] 
+   level 1: [5 6] [12 20 30] 
+insert  7  (splits this step: 0)
+   level 0: [10] 
+   level 1: [5 6 7] [12 20 30] 
+insert 17  (splits this step: 1)
+   level 0: [10 20] 
+   level 1: [5 6 7] [12 17] [30] 
+total splits = 2, height = 2 (all leaves at same depth)
+
+=== Search tests (node visits = disk reads) ===
+search   5 (smallest        ): found=1, node visits=2
+search  30 (largest         ): found=1, node visits=2
+search  17 (middle          ): found=1, node visits=2
+search  99 (missing (> max) ): found=0, node visits=2
+search   1 (missing (< min) ): found=0, node visits=2
+
+=== Larger B-tree: 100,000 random keys, t=2 vs the theory ===
+t=2 tree height = 13 levels
+
+=== Disk reads for 5,000,000 keys at 10 ms per read ===
+Order-100 B-tree: min children = 50
+  height bound  h <= log_50((n+1)/2) + 1 = 4.77  -> worst case 4 levels
+  best case (all nodes full): log_100(n+1) = 3.35 -> 4 levels
+structure               node visits  time / search
+BST (balanced)                   23         230 ms
+AVL (typical ~log2 n)            23         230 ms
+AVL (worst 1.44 log2)            33         330 ms
+B-tree order 100                  4          40 ms

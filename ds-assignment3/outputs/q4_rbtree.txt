@@ -1,0 +1,61 @@
+The five red-black properties:
+ 1. Every node is red or black.        2. The root is black.
+ 3. Every NIL leaf is black.           4. A red node has only black children.
+ 5. All root-to-NIL paths contain the same number of black nodes.
+
+=== Insert 10,20,30,15,25,5 by hand-trace (R = red, B = black; root at left) ===
+
+insert 10:
+10B
+   properties hold: yes
+
+insert 20:
+      20R
+10B
+   properties hold: yes
+
+insert 30:
+      rotate LEFT at 10
+      30R
+20B
+      10R
+   properties hold: yes
+
+insert 15:
+      recolour: parent 10 & uncle 30 -> BLACK, grandparent 20 -> RED
+      30B
+20B
+            15R
+      10B
+   properties hold: yes
+
+insert 25:
+      30B
+            25R
+20B
+            15R
+      10B
+   properties hold: yes
+
+insert 5:
+      30B
+            25R
+20B
+            15R
+      10B
+            5R
+   properties hold: yes
+
+Smallest key (leftmost node) = 5  (a scheduler caches this pointer: O(1) pick-next)
+
+=== 10,000 random insertions then 10,000 random deletions: rotations ===
+after insertions : RB height 16 | AVL height 16 (limit 2*log2(n+1) = 26.6)
+
+rotations                 Red-black          AVL
+10,000 insertions              5841         6924   (0.58 vs 0.69 per op)
+10,000 deletions               3936         3788   (0.39 vs 0.38 per op)
+RB recolourings during insertion+deletion: 10252
+checker run after EVERY one of the 20,000 operations: all valid
+
+=== Increasing-order insertion 1..10000 ===
+RB height 24, AVL height 14, RB rotations 9976, AVL rotations 9986, RB valid: yes

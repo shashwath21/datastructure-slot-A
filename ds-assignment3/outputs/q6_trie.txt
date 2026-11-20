@@ -1,0 +1,29 @@
+=== Small demo: the six contacts ===
+nodes = 22, memory = 22 x 216 = 4752 bytes
+count_prefix("a") = 5
+count_prefix("an") = 4
+count_prefix("anu") = 2
+count_prefix("b") = 1
+count_prefix("z") = 0
+count_prefix("") = 6
+autocomplete "an"  : anand anitha anu anusuya 
+autocomplete "anu" : anu anusuya 
+autocomplete "anuq": (no matches) -> 0
+autocomplete "anitha" (prefix is a whole word): anitha 
+autocomplete "" (empty prefix lists everything): anand anitha anu anusuya arun bala 
+
+delete "anu"     -> 1; search anu=0, anusuya=1, count_prefix(an)=3, nodes=22 (word was a prefix of anusuya: nodes kept)
+delete "anusuya" -> 1; count_prefix(an)=2, nodes=17 (branch pruned)
+delete "zzz" (absent) -> 0
+
+=== Load 5,000 names from data/names_5000.txt ===
+read 5000 lines, distinct words in trie = 4192, nodes = 12484, memory = 2633.34 KB
+prefix "ka": 134 names, first 5 -> kaan kaankaha kaankuja kaannana kaanva 
+prefix "mari": 2 names, first 5 -> mariprila mariva 
+
+=== Time per prefix search vs number of names (prefix length 3) ===
+names    trie nodes   trie memory      sorted-array mem   ns per count_prefix
+500      1858              391.9 KB            7.5 KB              8
+5000     12232            2580.2 KB           75.6 KB              8
+50000    79023           16668.9 KB          758.1 KB              8
+(time is nearly flat as names grow x100: it depends on prefix LENGTH, not the number of words)

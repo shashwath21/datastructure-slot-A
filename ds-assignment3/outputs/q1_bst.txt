@@ -1,0 +1,24 @@
+=== Traversals on a small BST ===
+preorder : 50 30 20 40 70 60 65 80 
+inorder  : 20 30 40 50 60 65 70 80    <- sorted
+postorder: 20 40 30 65 60 80 70 50 
+level    : 50 30 70 20 40 60 80 65 
+height = 3
+
+=== Deletion: leaf, one child, two children ===
+delete 20 (leaf)         -> inorder: 30 40 50 60 65 70 80  preorder: 50 30 40 70 60 65 80  valid=1
+delete 30 (one child)    -> inorder: 40 50 60 65 70 80  preorder: 50 40 70 60 65 80  valid=1
+delete 50 (two children) -> inorder: 40 60 65 70 80  preorder: 60 40 70 65 80  valid=1
+
+=== Save (preorder) to file and rebuild ===
+rebuilt tree has identical shape: YES
+
+=== Edge cases ===
+empty tree: search=0 height=-1 count=0
+delete from empty tree OK (root=(nil))
+inserted 7,7,7,3,3 -> count=2 (duplicates ignored) inorder: 3 7 
+
+=== Experiment: 2000 keys, random vs sorted insertion ===
+sorted order   n=2000  height=1999  avg comparisons= 1000.50
+random order   n=2000  height=  20  avg comparisons=   12.54
+ideal (perfectly balanced) height = floor(log2(2000)) = 10

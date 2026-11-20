@@ -1,0 +1,2 @@
+a:5 an:4 anu:2 b:1 z:0 
+nodes = 22 (incl. root), memory = 22 x 216 bytes = 4752 bytes

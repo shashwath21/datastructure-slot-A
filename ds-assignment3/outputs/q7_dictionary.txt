@@ -1,0 +1,25 @@
+=== STAGE 3: verify on a 1,000-word sample (trie result vs sorted-array reference) ===
+words = 1000, trie nodes = 4437
+exact look-up of all 1000 words: 1000 found PASS
+2000 random probe words (present or absent) vs reference: 0 mismatches PASS
+  autocomplete "ka": 99 words (reference 99)
+  autocomplete "mani": 1 words (reference 1)
+  autocomplete "thav": 8 words (reference 8)
+  autocomplete "sai": 49 words (reference 49)
+  autocomplete "zz": 0 words (reference 0)
+  autocomplete "ven": 43 words (reference 43)
+autocomplete counts: PASS
+  first 5 for "ka": kadhadhanamu kagapakara kakamukanni kakangamumu kakanven 
+  range [ka .. kz]: 99 words (reference 99)
+  range [mani .. mz]: 131 words (reference 131)
+  range [a .. zzz]: 1000 words (reference 1000)
+  range [tha .. thb]: 46 words (reference 46)
+range listing counts: PASS
+  range [kana .. kani] -> kanalotha kanama kandha kandhadhare kandhalamivi kandhasaire kanga 
+spell-check: "kzkangamumu" (typo of "kakangamumu") -> suggestions: kakangamumu
+
+=== Memory and response time at 1,000 / 20,000 / 200,000 words ===
+words     nodes       sibling-trie       26-pointer trie     sorted array       lookup         autocomplete(3)
+1000      4457              0.10 MB            0.92 MB             0.02 MB          102 ns         0.36 us
+20000     66107             1.51 MB           13.62 MB             0.35 MB          421 ns         0.53 us
+200000    496624           11.37 MB          102.30 MB             3.67 MB         1364 ns         0.55 us

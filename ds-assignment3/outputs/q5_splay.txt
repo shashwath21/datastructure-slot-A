@@ -1,0 +1,55 @@
+=== Trace: splay 3 then 9 in a BST built from 6,2,9,1,4,3,8,10,7 ===
+initial tree (root at left):
+          10
+     9
+          8
+               7
+6
+          4
+               3
+     2
+          1
+
+access 3:
+   zig at 4
+   zig-zag at 6
+               10
+          9
+               8
+                    7
+     6
+          4
+3
+     2
+          1
+
+access 9:
+   zig-zig at 3
+     10
+9
+          8
+               7
+     6
+               4
+          3
+               2
+                    1
+
+=== 10,000 accesses over 1,000 keys ===
+   access #1 key 922  visited 7   -> root after splay = 922
+   access #2 key 430  visited 10  -> root after splay = 430
+   access #3 key 748  visited 8   -> root after splay = 748
+   access #4 key 57   visited 11  -> root after splay = 57
+   access #5 key 542  visited 10  -> root after splay = 542
+   access #6 key 516  visited 6   -> root after splay = 516
+   access #7 key 134  visited 5   -> root after splay = 134
+   access #8 key 721  visited 10  -> root after splay = 721
+   access #9 key 516  visited 2   -> root after splay = 516
+   access #10 key 365  visited 13  -> root after splay = 365
+SKEWED 80% of accesses -> 5% of keys       splay avg  8.05 | AVL avg  7.03 | splay worst single access 27
+UNIFORM (every key equally likely)         splay avg 12.39 | AVL avg  9.23 | splay worst single access 28
+VERY SKEWED 95% of accesses -> 1% of keys  splay avg  4.09 | AVL avg  6.36 | splay worst single access 22
+
+=== Sorted-order access: insert 1..1000 with splaying, then access 1..1000 in order ===
+tree is a long spine after the inserts; first access visits 1000 nodes (worst single access = 1000, an O(n) operation!)
+but total for all 1000 sequential accesses = 6259 nodes (avg 6.26) -> amortised O(1) each
